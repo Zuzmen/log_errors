@@ -1,0 +1,45 @@
+<div class="main-container">
+  <div class="main-container search">
+    <input class="main-container search-input" type="text" [(ngModel)]="searchQuery" (input)="onInputChange($event)" placeholder="Search...">
+    <div class="main-container favorite">
+      <input type="checkbox" [checked]="showFavorites" (input)="toggleShowFavorites($event)">Show favorite events
+    </div>
+  </div>
+  <div class="top-tab-content" *ngFor="let tab of jsonData; let i = index">
+    <div *ngIf="i === selectedTabIndex" class="tab-pane fade show active">
+      <p>{{ tab._rawDataFields.detection_1_detectionFields_1_source }}</p>
+      <p>{{ tab._rawDataFields.detection_1_ruleName }}</p>
+      <p>{{ tab._rawDataFields.detection_1_description }}</p>
+      <p>{{ tab._rawDataFields.detectionTime }}</p>
+    </div>
+  </div>
+  <div class="list-container">
+    <ul class="nav nav-tabs" [style.width]="calculateWidth()">
+      <li class="nav-item" *ngFor="let tab of jsonData; let i = index" (click)="selectTab(i)">
+        <div class="nav-link">
+          <a class="nav-link" [class.active-tab]="i === selectedTabIndex">
+            <div class="nav-info">
+              <p [title]="tab._rawDataFields.alert_type">{{ truncateText(tab._rawDataFields.alert_type, 8) }}</p>
+              <p [title]="tab._rawDataFields.createdTime">{{ truncateText(parseTimeStamp(tab._rawDataFields.createdTime), 8) }}</p>
+              <p [title]="tab._rawDataFields.detection_1_alertState">{{ truncateText(tab._rawDataFields.detection_1_alertState, 8) }}</p>
+            </div>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="bottom-tab-content" *ngFor="let tab of jsonData; let i = index">
+    <div *ngIf="i === selectedTabIndex">
+      <div *ngFor="let category of getObjectKeys(categorizedData)">
+          <h3 (click)="toggleCategory(category)" >{{ category | capitalize }}</h3>
+          <ul class="category" *ngIf="selectedCategory === category">
+            <li class="category-context" *ngFor="let item of selectedContent">
+                <div [title]="item.key" class="category-context-key">{{ getItemKey(item) }} :</div>
+                <div [title]="item.value" class="category-context-value"> {{ getItemValue(item) }}</div>
+                <input type="checkbox" [(ngModel)]="item.isFavorite" (change)="toggleFavorite(item)">
+            </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

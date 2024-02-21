@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'SansPro';
+  src: url('./assets/source-sans-pro.regular.ttf');
+}
+
+html {
+  border: 3px solid black;
+}
+body {
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to bottom, #1e233cfe, gray);
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  font-family: 'SansPro', sans-serif;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 7px;
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: steelblue;
+  border-radius: 10px;
+}
