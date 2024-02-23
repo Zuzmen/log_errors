@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable, of } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,11 @@ export class DataService {
   ) { }
 
   public getJsonData(): Observable<any> {
-      return this.http.get<any>(environment.data);
+      return this.http.get<any>(environment.data).pipe(
+        catchError(error => {
+          // Handle and optionally transform error before throwing
+          return throwError(() => new Error('Error fetching data'));
+        })
+      );
   }
 }

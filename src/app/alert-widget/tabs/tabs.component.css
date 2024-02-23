@@ -74,6 +74,7 @@ h3 {
   grid-template-columns: 1.7fr 2fr 0.1fr;
   color: grey;
   font-size: 13px;
+  border-bottom: 0.5px solid gray;
 }
 .main-container .search {
   float: right;
